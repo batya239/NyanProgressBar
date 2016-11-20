@@ -1,0 +1,40 @@
+<idea-plugin>
+  <id>some.awesome</id>
+  <name>Nyan Progress Bar</name>
+  <version>1.7</version>
+  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">Hello world app inc</vendor>
+
+  <description><![CDATA[
+      Pretty progress bars for IJ based IDEs.
+    ]]></description>
+
+  <change-notes><![CDATA[
+      <!--Add change notes here.<br>-->
+      <em>1.3 cool indeterminate progress bar</em><br>
+      <em>1.4 indeterminate progress bar is updated as was suggested by the guru of UX (Denis Fokin)</em><br>
+      <em>1.6 more friendly indeterminate progress bar</em>
+      <em>1.7 fix: infinitely played sound</em>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="141.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <depends>com.intellij.modules.lang</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+  <application-components>
+    <component>
+      <implementation-class>NyanApplicationComponent</implementation-class>
+    </component>
+  </application-components>
+</idea-plugin>
