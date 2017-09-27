@@ -1,8 +1,8 @@
 <idea-plugin>
   <id>some.awesome</id>
   <name>Nyan Progress Bar</name>
-  <version>1.7</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">Hello world app inc</vendor>
+  <version>1.10</version>
+  <vendor email="dmitry.batkovich@jetbrains.com">Dmitry Batkovich</vendor>
 
   <description><![CDATA[
       Pretty progress bars for IJ based IDEs.
@@ -10,10 +10,13 @@
 
   <change-notes><![CDATA[
       <!--Add change notes here.<br>-->
-      <em>1.3 cool indeterminate progress bar</em><br>
-      <em>1.4 indeterminate progress bar is updated as was suggested by the guru of UX (Denis Fokin)</em><br>
-      <em>1.6 more friendly indeterminate progress bar</em>
+      <em>1.10 remove hidpi bug workaround (see: https://youtrack.jetbrains.com/issue/IDEA-171404)<em>
+      <em>1.9 minor fixes </em>
+      <em>1.8 hidpi fixes, don't play sound on startup </em>
       <em>1.7 fix: infinitely played sound</em>
+      <em>1.6 more friendly indeterminate progress bar</em>
+      <em>1.4 indeterminate progress bar is updated as was suggested by the guru of UX (Denis Fokin)</em><br>
+      <em>1.3 cool indeterminate progress bar</em><br>
     ]]>
   </change-notes>
 
@@ -22,7 +25,7 @@
 
   <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
        on how to target different products -->
-  <depends>com.intellij.modules.lang</depends>
+  <depends>com.intellij.modules.platform</depends>
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
