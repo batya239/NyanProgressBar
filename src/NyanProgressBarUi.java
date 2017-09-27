@@ -13,13 +13,10 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 public class NyanProgressBarUi extends BasicProgressBarUI {
     private static final float ONE_OVER_SEVEN = 1f / 7;
     private static final Color VIOLET = new Color(90, 0, 157);
-    private boolean start;
 
 
     {
@@ -48,17 +45,6 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
             @Override
             public void componentHidden(ComponentEvent e) {
                 super.componentHidden(e);
-            }
-        });
-        progressBar.addPropertyChangeListener(new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if ("ancestor".equals(evt.getPropertyName())) {
-                    NyanApplicationComponent instance = NyanApplicationComponent.getInstance();
-                    if (instance != null) {
-                        instance.dec();
-                    }
-                }
             }
         });
     }
@@ -156,7 +142,7 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
 
 //        g.setPaint(baseRainbowPaint);
 
-        Icon scaledIcon = velocity > 0 ? ((ScalableIcon) NyanIcons.CAT_ICON).scale(1f / 4) : ((ScalableIcon) NyanIcons.RCAT_ICON).scale(1f / 4) ;
+        Icon scaledIcon = velocity > 0 ? ((ScalableIcon) NyanIcons.CAT_ICON) : ((ScalableIcon) NyanIcons.RCAT_ICON) ;
 //        if (velocity < 0) {
 //            scaledIcon = new ReflectedIcon(scaledIcon);
 //        }
@@ -179,13 +165,6 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
 
     @Override
     protected void paintDeterminate(Graphics g, JComponent c) {
-        if (!start) {
-            NyanApplicationComponent.getInstance().inc();
-            start = true;
-        }
-        if (progressBar.getPercentComplete() > 0.9) {
-            NyanApplicationComponent.getInstance().dec();
-        }
         if (!(g instanceof Graphics2D)) {
             return;
         }
@@ -229,7 +208,7 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
                 new float[]{ONE_OVER_SEVEN * 1, ONE_OVER_SEVEN * 2, ONE_OVER_SEVEN * 3, ONE_OVER_SEVEN * 4, ONE_OVER_SEVEN * 5, ONE_OVER_SEVEN * 6, ONE_OVER_SEVEN * 7},
                 new Color[]{Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.cyan, Color.blue, VIOLET}));
 
-        ((ScalableIcon)NyanIcons.CAT_ICON).scale(1f / 4).paintIcon(progressBar, g2, amountFull - JBUI.scale(10), -JBUI.scale(6));
+        NyanIcons.CAT_ICON.paintIcon(progressBar, g2, amountFull - JBUI.scale(10), -JBUI.scale(6));
         g2.fill(new RoundRectangle2D.Float(2f*off,2f*off, amountFull - JBUI.scale(5f), h - JBUI.scale(5f), JBUI.scale(7f), JBUI.scale(7f)));
         g2.translate(0, -(c.getHeight() - h)/2);
 
