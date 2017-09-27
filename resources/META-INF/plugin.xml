@@ -10,11 +10,11 @@
 
   <change-notes><![CDATA[
       <!--Add change notes here.<br>-->
-      <em>1.10 remove hidpi bug workaround (see: https://youtrack.jetbrains.com/issue/IDEA-171404). Kudos to Anton Tarasov!</em>
-      <em>1.9 minor fixes </em>
-      <em>1.8 hidpi fixes, don't play sound on startup </em>
-      <em>1.7 fix: infinitely played sound</em>
-      <em>1.6 more friendly indeterminate progress bar</em>
+      <em>1.10 remove hidpi bug workaround (see: https://youtrack.jetbrains.com/issue/IDEA-171404). Kudos to Anton Tarasov!</em><br>
+      <em>1.9 minor fixes </em><br>
+      <em>1.8 hidpi fixes, don't play sound on startup </em><br>
+      <em>1.7 fix: infinitely played sound</em><br>
+      <em>1.6 more friendly indeterminate progress bar</em><br>
       <em>1.4 indeterminate progress bar is updated as was suggested by the guru of UX (Denis Fokin)</em><br>
       <em>1.3 cool indeterminate progress bar</em><br>
     ]]>
