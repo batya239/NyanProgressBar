@@ -10,7 +10,7 @@
 
   <change-notes><![CDATA[
       <!--Add change notes here.<br>-->
-      <em>1.10 remove hidpi bug workaround (see: https://youtrack.jetbrains.com/issue/IDEA-171404)<em>
+      <em>1.10 remove hidpi bug workaround (see: https://youtrack.jetbrains.com/issue/IDEA-171404). Kudos to Anton Tarasov!<em>
       <em>1.9 minor fixes </em>
       <em>1.8 hidpi fixes, don't play sound on startup </em>
       <em>1.7 fix: infinitely played sound</em>
