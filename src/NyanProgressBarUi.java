@@ -9,13 +9,10 @@ import sun.swing.SwingUtilities2;
 import javax.swing.*;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
-
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NyanProgressBarUi extends BasicProgressBarUI {
 
