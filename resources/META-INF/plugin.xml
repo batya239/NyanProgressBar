@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>some.awesome</id>
   <name>Nyan Progress Bar</name>
-  <version>1.10</version>
+  <version>1.11</version>
   <vendor email="dmitry.batkovich@jetbrains.com">Dmitry Batkovich</vendor>
 
   <description><![CDATA[
