@@ -4,6 +4,7 @@ import com.intellij.ui.Gray;
 import com.intellij.ui.JBColor;
 import com.intellij.util.ui.GraphicsUtil;
 import com.intellij.util.ui.JBUI;
+import com.intellij.util.ui.UIUtil;
 import sun.swing.SwingUtilities2;
 
 import javax.swing.*;
@@ -134,7 +135,10 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
         }
 
         area.subtract(new Area(new RoundRectangle2D.Float(0, 0, w, h, R2, R2)));
-        g.setPaint(c.getParent().getBackground());
+
+        Container parent = c.getParent();
+        Color background = parent != null ? parent.getBackground() : UIUtil.getPanelBackground();
+        g.setPaint(background);
 //        g.setPaint(baseRainbowPaint);
         if (c.isOpaque()) {
             g.fill(area);
@@ -188,7 +192,10 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
 
         int amountFull = getAmountFull(b, barRectWidth, barRectHeight);
 
-        g.setColor(c.getParent().getBackground());
+        Container parent = c.getParent();
+        Color background = parent != null ? parent.getBackground() : UIUtil.getPanelBackground();
+
+        g.setColor(background);
         Graphics2D g2 = (Graphics2D)g;
         if (c.isOpaque()) {
             g.fillRect(0, 0, w, h);
@@ -201,7 +208,7 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
         g2.translate(0, (c.getHeight() - h)/2);
         g2.setColor(progressBar.getForeground());
         g2.fill(new RoundRectangle2D.Float(0, 0, w - off, h - off, R2, R2));
-        g2.setColor(c.getParent().getBackground());
+        g2.setColor(background);
         g2.fill(new RoundRectangle2D.Float(off, off, w - 2f*off - off, h - 2f*off - off, R, R));
 //        g2.setColor(progressBar.getForeground());
         g2.setPaint(new LinearGradientPaint(0, JBUI.scale(2), 0, h - JBUI.scale(6),
