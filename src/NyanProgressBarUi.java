@@ -13,16 +13,19 @@ import javax.swing.plaf.basic.BasicProgressBarUI;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.geom.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+import java.util.Optional;
 
 public class NyanProgressBarUi extends BasicProgressBarUI {
     private static final float ONE_OVER_SEVEN = 1f / 7;
     private static final Color VIOLET = new Color(90, 0, 157);
+    private static final int PROGRESS_BAR_WIDTH_MINIMUM = 140;
 
+    private static Thread audioPlayerThread;
 
-    {
-
-    }
     @SuppressWarnings({"MethodOverridesStaticMethodOfSuperclass", "UnusedDeclaration"})
     public static ComponentUI createUI(JComponent c) {
         c.setBorder(JBUI.Borders.empty().asUIResource());
@@ -50,9 +53,24 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
         });
     }
 
+    @Override
+    public void uninstallUI(JComponent c) {
+        super.uninstallUI(c);
+
+        if (c.getWidth() > PROGRESS_BAR_WIDTH_MINIMUM) {
+            Optional.ofNullable(audioPlayerThread)
+                    .filter(Thread::isAlive)
+                    .ifPresent(it -> {
+                        audioPlayerThread.interrupt();
+                        audioPlayerThread = null;
+                    });
+        }
+    }
+
     protected volatile int offset = 0;
     protected volatile int offset2 = 0;
     protected volatile int velocity = 1;
+
     @Override
     protected void paintIndeterminate(Graphics g2d, JComponent c) {
 
@@ -69,7 +87,11 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
         if (barRectWidth <= 0 || barRectHeight <= 0) {
             return;
         }
-        //boxRect = getBox(boxRect);
+
+        if (audioPlayerThread == null) {
+            startPlayingMusic();
+        }
+
         g.setColor(new JBColor(Gray._240.withAlpha(50), Gray._128.withAlpha(50)));
         int w = c.getWidth();
         int h = c.getPreferredSize().height;
@@ -89,32 +111,13 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
         g.translate(0, (c.getHeight() - h) / 2);
         int x = -offset;
 
-
-//        LinearGradientPaint baseRainbowPaint = new LinearGradientPaint(0, JBUI.scale(2), 0, h - JBUI.scale(6),
-//                new float[]{ONE_OVER_SEVEN * 1, ONE_OVER_SEVEN * 2, ONE_OVER_SEVEN * 3, ONE_OVER_SEVEN * 4, ONE_OVER_SEVEN * 5, ONE_OVER_SEVEN * 6, ONE_OVER_SEVEN * 7},
-//                new Color[]{Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.cyan, Color.blue, VIOLET});
-
         Paint old = g.getPaint();
         g.setPaint(baseRainbowPaint);
 
         final float R = JBUI.scale(8f);
         final float R2 = JBUI.scale(9f);
         final Area containingRoundRect = new Area(new RoundRectangle2D.Float(1f, 1f, w - 2f, h - 2f, R, R));
-//        while (x < Math.max(c.getWidth(), c.getHeight())) {
-//            Path2D.Double path = new Path2D.Double();
-//            float ww = getPeriodLength() / 2f;
-//            path.moveTo(x, 0);
-//            path.lineTo(x+ww, 0);
-//            path.lineTo(x+ww - h / 2, h);
-//            path.lineTo(x-h / 2, h);
-//            path.lineTo(x, 0);
-//            path.closePath();
-//
-//            final Area area = new Area(path);
-//            area.intersect(containingRoundRect);
-            g.fill(containingRoundRect);
-//            x+= getPeriodLength();
-//        }
+        g.fill(containingRoundRect);
         g.setPaint(old);
         offset = (offset + 1) % getPeriodLength();
         offset2 += velocity;
@@ -125,11 +128,10 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
             offset2 = w - JBUI.scale(15);
             velocity = -1;
         }
-//        offset2 = (offset2 + 1) % (w - 3);
+
         Area area = new Area(new Rectangle2D.Float(0, 0, w, h));
         area.subtract(new Area(new RoundRectangle2D.Float(1f, 1f, w - 2f, h - 2f, R, R)));
         g.setPaint(Gray._128);
-//        g.setPaint(baseRainbowPaint);
         if (c.isOpaque()) {
             g.fill(area);
         }
@@ -139,17 +141,11 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
         Container parent = c.getParent();
         Color background = parent != null ? parent.getBackground() : UIUtil.getPanelBackground();
         g.setPaint(background);
-//        g.setPaint(baseRainbowPaint);
         if (c.isOpaque()) {
             g.fill(area);
         }
 
-//        g.setPaint(baseRainbowPaint);
-
         Icon scaledIcon = velocity > 0 ? ((ScalableIcon) NyanIcons.CAT_ICON) : ((ScalableIcon) NyanIcons.RCAT_ICON) ;
-//        if (velocity < 0) {
-//            scaledIcon = new ReflectedIcon(scaledIcon);
-//        }
         scaledIcon.paintIcon(progressBar, g, offset2 - JBUI.scale(10), -JBUI.scale(6));
 
         g.draw(new RoundRectangle2D.Float(1f, 1f, w - 2f - 1f, h - 2f -1f, R, R));
@@ -190,6 +186,10 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
             return;
         }
 
+        if (audioPlayerThread == null) {
+            startPlayingMusic();
+        }
+
         int amountFull = getAmountFull(b, barRectWidth, barRectHeight);
 
         Container parent = c.getParent();
@@ -210,7 +210,6 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
         g2.fill(new RoundRectangle2D.Float(0, 0, w - off, h - off, R2, R2));
         g2.setColor(background);
         g2.fill(new RoundRectangle2D.Float(off, off, w - 2f*off - off, h - 2f*off - off, R, R));
-//        g2.setColor(progressBar.getForeground());
         g2.setPaint(new LinearGradientPaint(0, JBUI.scale(2), 0, h - JBUI.scale(6),
                 new float[]{ONE_OVER_SEVEN * 1, ONE_OVER_SEVEN * 2, ONE_OVER_SEVEN * 3, ONE_OVER_SEVEN * 4, ONE_OVER_SEVEN * 5, ONE_OVER_SEVEN * 6, ONE_OVER_SEVEN * 7},
                 new Color[]{Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.cyan, Color.blue, VIOLET}));
@@ -278,29 +277,10 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
         return value % 2 == 0;
     }
 
-    private class ReflectedIcon implements Icon {
-        private final Icon myIcon;
-
-        private ReflectedIcon(Icon myIcon) {
-            this.myIcon = myIcon;
-        }
-
-        @Override
-        public void paintIcon(Component c, Graphics g, int x, int y) {
-            Graphics2D g2d = (Graphics2D)g.create();
-            g2d.setTransform(AffineTransform.getQuadrantRotateInstance(2, (double)this.getIconWidth() / 2.0D, (double)this.getIconHeight() / 2.0D));
-            myIcon.paintIcon(c, g2d, x, y);
-        }
-
-        @Override
-        public int getIconWidth() {
-            return myIcon.getIconWidth();
-        }
-
-        @Override
-        public int getIconHeight() {
-            return myIcon.getIconHeight();
-        }
+    private void startPlayingMusic() {
+        audioPlayerThread = new Thread(() ->
+                new AudioPlayerListener().play());
+        audioPlayerThread.start();
     }
 
 }
