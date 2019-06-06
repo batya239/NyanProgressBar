@@ -10,6 +10,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <em>1.13 Fix initialization exception in 2019.2</em><br>
       <em>1.12 NPE</em><br>
       <em>1.11 fix indeterminate progress bar (remove dashed style)</em><br>
       <em>1.10 remove hidpi bug workaround (see: https://youtrack.jetbrains.com/issue/IDEA-171404). Kudos to Anton Tarasov!</em><br>
