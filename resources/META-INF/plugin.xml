@@ -1,15 +1,15 @@
 <idea-plugin>
   <id>some.awesome</id>
   <name>Nyan Progress Bar</name>
-  <version>1.12</version>
+  <version>1.13</version>
+  <idea-version since-build="192"/>
   <vendor email="dmitry.batkovich@jetbrains.com">Dmitry Batkovich</vendor>
 
   <description><![CDATA[
-      Pretty progress bars for IJ based IDEs.
+      Pretty progress bars with nyan cat for IJ based IDEs.
     ]]></description>
 
   <change-notes><![CDATA[
-      <!--Add change notes here.<br>-->
       <em>1.12 NPE</em><br>
       <em>1.11 fix indeterminate progress bar (remove dashed style)</em><br>
       <em>1.10 remove hidpi bug workaround (see: https://youtrack.jetbrains.com/issue/IDEA-171404). Kudos to Anton Tarasov!</em><br>

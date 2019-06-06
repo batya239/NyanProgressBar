@@ -20,9 +20,6 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
     private static final Color VIOLET = new Color(90, 0, 157);
 
 
-    {
-
-    }
     @SuppressWarnings({"MethodOverridesStaticMethodOfSuperclass", "UnusedDeclaration"})
     public static ComponentUI createUI(JComponent c) {
         c.setBorder(JBUI.Borders.empty().asUIResource());
@@ -50,9 +47,9 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
         });
     }
 
-    protected volatile int offset = 0;
-    protected volatile int offset2 = 0;
-    protected volatile int velocity = 1;
+    private volatile int offset = 0;
+    private volatile int offset2 = 0;
+    private volatile int velocity = 1;
     @Override
     protected void paintIndeterminate(Graphics g2d, JComponent c) {
 
@@ -270,38 +267,12 @@ public class NyanProgressBarUi extends BasicProgressBarUI {
         return availableLength;
     }
 
-    protected int getPeriodLength() {
+    private int getPeriodLength() {
         return JBUI.scale(16);
     }
 
     private static boolean isEven(int value) {
         return value % 2 == 0;
     }
-
-    private class ReflectedIcon implements Icon {
-        private final Icon myIcon;
-
-        private ReflectedIcon(Icon myIcon) {
-            this.myIcon = myIcon;
-        }
-
-        @Override
-        public void paintIcon(Component c, Graphics g, int x, int y) {
-            Graphics2D g2d = (Graphics2D)g.create();
-            g2d.setTransform(AffineTransform.getQuadrantRotateInstance(2, (double)this.getIconWidth() / 2.0D, (double)this.getIconHeight() / 2.0D));
-            myIcon.paintIcon(c, g2d, x, y);
-        }
-
-        @Override
-        public int getIconWidth() {
-            return myIcon.getIconWidth();
-        }
-
-        @Override
-        public int getIconHeight() {
-            return myIcon.getIconHeight();
-        }
-    }
-
 }
 
