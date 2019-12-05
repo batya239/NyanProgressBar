@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>some.awesome</id>
   <name>Nyan Progress Bar</name>
-  <version>1.13</version>
+  <version>1.14</version>
   <idea-version since-build="192"/>
   <vendor email="dmitry.batkovich@jetbrains.com">Dmitry Batkovich</vendor>
 
@@ -10,6 +10,7 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <em>1.14 Add plugin icon (thanks to Vasya Kudryashov)</em><br>
       <em>1.13 Fix initialization exception in 2019.2</em><br>
       <em>1.12 NPE</em><br>
       <em>1.11 fix indeterminate progress bar (remove dashed style)</em><br>
