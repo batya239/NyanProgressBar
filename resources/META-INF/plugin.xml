@@ -2,7 +2,7 @@
   <id>some.awesome</id>
   <name>Nyan Progress Bar</name>
   <version>1.14</version>
-  <idea-version since-build="192"/>
+  <idea-version since-build="193"/>
   <vendor email="dmitry.batkovich@jetbrains.com">Dmitry Batkovich</vendor>
 
   <description><![CDATA[
@@ -36,9 +36,8 @@
     <!-- Add your actions here -->
   </actions>
 
-  <application-components>
-    <component>
-      <implementation-class>NyanApplicationComponent</implementation-class>
-    </component>
-  </application-components>
+  <applicationListeners>
+    <listener class="NyanApplicationComponent" topic="com.intellij.ide.ui.LafManagerListener"/>
+    <listener class="NyanApplicationComponent" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+  </applicationListeners>
 </idea-plugin>
