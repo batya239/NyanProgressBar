@@ -2,7 +2,7 @@
   <id>some.awesome</id>
   <name>Nyan Progress Bar</name>
   <version>1.14</version>
-  <idea-version since-build="192"/>
+  <idea-version since-build="192" until-build="232.*"/>
   <vendor email="dmitry.batkovich@jetbrains.com">Dmitry Batkovich</vendor>
 
   <description><![CDATA[
